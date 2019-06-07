@@ -24,7 +24,46 @@ resource "random_id" "name" {
   byte_length = 4
 }
 
+################################################
+# Determine kubernetes version
+################################################
+resource "null_resource" "validate-kube-version" {
+  provisioner "local-exec" {
+    interpreter = ["/bin/bash", "-c"]
+    command = <<EOT
+regex="^latest|(([0-9]+\\.?){0,2}([0-9]+))$"
+if [[ ! ${lower(var.kube_version)} =~ $$regex ]]; then
+    echo "Invalid kubernetes version"
+    exit 1
+fi
+EOT
+  }
+}
+
+data "ibm_container_cluster_versions" "cluster_versions" {
+  org_guid        = "${var.org}"
+  space_guid      = "${var.space}"
+  region          = "${var.region}"
+}
+
+# ibm_container_cluster_versions does not support a filter
+# attribute. Use external data source to find the appropriate
+# kubernetes version based on the user-specified version 'prefix'.
+data "external" "get_latest_version" {
+  program = ["bash", "${path.module}/scripts/get-version.sh"]
+
+  query = {
+    version_prefix     = "${lower(var.kube_version) != "latest" ? var.kube_version : ""}"
+    supported_versions = "${join(",", data.ibm_container_cluster_versions.cluster_versions.valid_kube_versions)}"
+  }
+}
+
+
+################################################
+# Create/manage cluster
+################################################
 resource "ibm_container_cluster" "kubecluster" {
+  depends_on      = ["null_resource.validate-kube-version"]
   name         		= "${var.cluster_name}"
   datacenter   		= "${var.datacenter}"
   org_guid     		= "${data.ibm_org.org.id}"
@@ -37,7 +76,7 @@ resource "ibm_container_cluster" "kubecluster" {
   subnet_id        	= "${var.subnet_id}"
   default_pool_size = "${var.num_workers}"
   resource_group_id = "${data.ibm_resource_group.named_group.id}"
-  kube_version      = "${var.kube_version}"
+  kube_version      = "${lookup(data.external.get_latest_version.result, "latest_version", "")}"
 }
 
 data "ibm_container_cluster_config" "cluster_config" {

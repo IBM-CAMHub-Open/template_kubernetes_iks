@@ -113,7 +113,7 @@
         {
             "name": "resource_group_name",
             "type": "string",
-            "description": "Name of the IBM Cloud resource group. You must have access to atleast one resource group in IBM Cloud.",
+            "description": "Name of the IBM Cloud resource group. You must have access to at least one resource group in IBM Cloud.",
             "default": "default",
             "hidden": false,
             "label": "IBM Cloud Resource Group Name",
@@ -442,19 +442,13 @@
         {
             "name": "kube_version",
             "type": "string",
-            "description": "Kubernetes version for the cluster.",
+            "description": "Kubernetes version for the cluster; 'latest' for the latest supported version, or version number in X.Y[.Z] format",
+            "default": "latest",
             "hidden": false,
             "label": "Kubernetes version",
             "secured": false,
             "required": true,
-            "immutable": false,
-            "options": [
-                {
-                    "value": "1.11.9",
-                    "label": "1.11.9",
-                    "default": "true"
-                }
-            ]
+            "immutable": false
         },        
         {
             "name": "deploy_tiller",
