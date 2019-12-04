@@ -45,6 +45,18 @@ function prepareClusterConfig() {
 }
 
 
+function isHelmVersion215OrLater() {
+    helm215OrLater=0
+    vercomp $HELM_VERSION '2.15.0'
+    case $? in
+        0)  helm215OrLater=0;;
+        1)  helm215OrLater=0;;
+        2)  helm215OrLater=1;;
+    esac
+    return $helm215OrLater
+}
+
+
 function installHelmLocally() {
     # Determine the platform architecture
     ARCH=`uname -a | rev | cut -d ' ' -f2 | rev`
@@ -54,8 +66,13 @@ function installHelmLocally() {
     esac
 
     # Install helm locally  
-    wget --quiet https://storage.googleapis.com/kubernetes-helm/helm-v${HELM_VERSION}-${PLATFORM}.tar.gz -P ${WORK_DIR} \
-        && tar -xzvf ${WORK_DIR}/helm-v${HELM_VERSION}-${PLATFORM}.tar.gz -C ${WORK_DIR}
+    if isHelmVersion215OrLater; then
+       wget --quiet https://get.helm.sh/helm-v${HELM_VERSION}-${PLATFORM}.tar.gz -P ${WORK_DIR} \
+            && tar -xzvf ${WORK_DIR}/helm-v${HELM_VERSION}-${PLATFORM}.tar.gz -C ${WORK_DIR}
+    else
+       wget --quiet https://storage.googleapis.com/kubernetes-helm/helm-v${HELM_VERSION}-${PLATFORM}.tar.gz -P ${WORK_DIR} \
+            && tar -xzvf ${WORK_DIR}/helm-v${HELM_VERSION}-${PLATFORM}.tar.gz -C ${WORK_DIR}
+    fi
 }
 
 function installKubectlLocally() {
@@ -71,27 +88,11 @@ function setupTillerAccount() {
     cacheDir=${WORK_DIR}/.kube/http-cache
     mkdir -p ${cacheDir}
 
-    ## Define the tiller account's role binding
-    cat > ${WORK_DIR}/tiller-clusterrolebinding.yaml <<EOT
-kind: ClusterRoleBinding
-apiVersion: rbac.authorization.k8s.io/v1beta1
-metadata:
-  name: tiller-clusterrolebinding
-subjects:
-- kind: ServiceAccount
-  name: tiller
-  namespace: kube-system
-roleRef:
-  kind: ClusterRole
-  name: cluster-admin
-  apiGroup: ""
-EOT
-
     echo "Creating and configuring tiller service account in cluster ${CLUSTER_NAME}..."
-    export KUBECONFIG=${WORK_DIR}/config.yaml \
-	    && ${WORK_DIR}/kubectl --cache-dir ${cacheDir} --namespace kube-system create serviceaccount tiller
-    export KUBECONFIG=${WORK_DIR}/config.yaml \
-        && ${WORK_DIR}/kubectl --cache-dir ${cacheDir} create -f ${WORK_DIR}/tiller-clusterrolebinding.yaml
+    export KUBECONFIG=${WORK_DIR}/config.yaml
+    ${WORK_DIR}/kubectl --cache-dir ${cacheDir} --namespace kube-system create serviceaccount tiller
+    ${WORK_DIR}/kubectl --cache-dir ${cacheDir} create clusterrolebinding tiller-clusterrolebinding \
+	                    --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
 }
 
 function removeTillerAccount() {
@@ -101,7 +102,8 @@ function removeTillerAccount() {
 
     echo "Removing tiller service account from cluster ${CLUSTER_NAME}..."
     export KUBECONFIG=${WORK_DIR}/config.yaml \
-	    && ${WORK_DIR}/kubectl --cache-dir ${cacheDir} --namespace kube-system delete serviceaccount tiller
+        && ${WORK_DIR}/kubectl --cache-dir ${cacheDir} --namespace kube-system delete serviceaccount tiller
     export KUBECONFIG=${WORK_DIR}/config.yaml \
         && ${WORK_DIR}/kubectl --cache-dir ${cacheDir} --namespace kube-system delete clusterrolebinding tiller-clusterrolebinding
 }
+
