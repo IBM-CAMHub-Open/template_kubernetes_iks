@@ -18,8 +18,6 @@ The user must be assigned the following access policies to deploy and manage clu
 | Parameter name         | Parameter description |
 | :---                   | :---        |
 | region                 | IBM Cloud region in which to deploy the cluster |
-| org                    | Organization under which to place the service |
-| space                  | Organization space to create the service |
 | cluster_name           | Name of the IKS cluster |
 | resource\_group\_name  | Name of the IBM Cloud resource group. You must have access to at least one resource group in IBM Cloud |
 | private\_vlan\_id      | Virtual network that allows private communication between worker nodes in this cluster. Can be retrieved by running bx cs vlans <location> |
