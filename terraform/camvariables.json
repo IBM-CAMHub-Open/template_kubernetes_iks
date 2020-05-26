@@ -1,0 +1,464 @@
+{
+    "terraform_version": "~> 0.11.0",
+    "input_datatypes": [],
+    "output_datatypes": [
+        {
+            "name": "kubeconfig",
+            "dataobject": {
+                "name":"${template_input_params.cluster_name}",
+                "attributes":[
+                    {
+                        "name": "cluster_name",
+                        "value": "${template_output_params.cluster_name}"
+                    },
+                    {
+                        "name": "cluster_config",
+                        "value": "${template_output_params.cluster_config}"
+                    },
+                    {
+                        "name": "cluster_certificate_authority",
+                        "value": "${template_output_params.cluster_certificate_authority}"
+                    }              
+                ]
+            }
+        }, 
+        {
+            "name": "com.ibm.cloud.cloudconnections.IKS",
+            "dataobject": {
+                "name":"${template_input_params.cluster_name}",
+                "attributes":[
+                    {
+                        "name": "cluster_name",
+                        "value": "${template_output_params.cluster_name}"
+                    },
+                    {
+                        "name": "region_name",
+                        "value": "${template_input_params.region}"
+                    },
+                    {
+                        "name": "bluemix_api_key",
+                        "value": "${connection_params.bluemix_api_key}"
+                    },
+                    {
+                        "name": "helm_version",
+                        "value": "${template_input_params.helm_version}"
+                    }                    
+                ]
+            }            
+        }
+    ],
+    "template_input_params": [
+        {
+            "name": "region",
+            "type": "string",
+            "description": "IBM Cloud region.",
+            "hidden": false,
+            "label": "Region",
+            "secured": false,
+            "required": true,
+            "immutable": false,
+            "options": [
+                {
+                    "value": "us-south",
+                    "label": "US South",
+                    "default": "true"
+                },
+                {
+                    "value": "us-east",
+                    "label": "US East"
+                },
+                {
+                    "value": "au-syd",
+                    "label": "Sydney"
+                },
+                {
+                    "value": "eu-de",
+                    "label": "Germany"
+                },
+                {
+                    "value": "eu-gb",
+                    "label": "United Kingdom"
+                }
+            ]
+        },
+        {
+            "name": "cluster_name",
+            "type": "string",
+            "description": "Name of the cluster.",
+            "hidden": false,
+            "label": "Cluster Name",
+            "secured": false,
+            "required": true,
+            "immutable": false
+        },
+        {
+            "name": "resource_group_name",
+            "type": "string",
+            "description": "Name of the IBM Cloud resource group. You must have access to at least one resource group in IBM Cloud.",
+            "default": "default",
+            "hidden": false,
+            "label": "IBM Cloud Resource Group Name",
+            "secured": false,
+            "required": true,
+            "immutable": false
+        },        
+        {
+            "name": "private_vlan_id",
+            "type": "string",
+            "description": "Virtual network that allows private communication between worker nodes in this cluster. Can be retrieved by running bx cs vlans <location>.",
+            "hidden": false,
+            "label": "Private VLAN",
+            "secured": false,
+            "required": false,
+            "immutable": false
+        },
+        {
+            "name": "public_vlan_id",
+            "type": "string",
+            "description": "Virtual network that allows secured communication between the worker nodes and the IBM-managed master node. Can be retrieved by running bx cs vlans <location>.",
+            "hidden": false,
+            "label": "Public VLAN",
+            "secured": false,
+            "required": false,
+            "immutable": false
+        },
+        {
+            "name": "subnet_id",
+            "type": "list",
+            "description": "The portable subnet to use for cluster. A list of available subnets can be retrieved by running bx cs subnets.",
+            "hidden": false,
+            "label": "Subnet ID",
+            "secured": false,
+            "required": false,
+            "immutable": false
+        },
+        {
+            "name": "num_workers",
+            "type": "string",
+            "description": "Number of workers to be deployed in the cluster.",
+            "hidden": false,
+            "label": "Number of workers",
+            "secured": false,
+            "required": true,
+            "immutable": false,
+            "options": [
+                {
+                    "value": "1",
+                    "label": "1",
+                    "default": "true"
+                },
+                {
+                    "value": "2",
+                    "label": "2"
+                },
+                {
+                    "value": "3",
+                    "label": "3"
+                },
+                {
+                    "value": "4",
+                    "label": "4"
+                },
+                {
+                    "value": "5",
+                    "label": "5"
+                },
+                {
+                    "value": "6",
+                    "label": "6"
+                },
+                {
+                    "value": "7",
+                    "label": "7"
+                },
+                {
+                    "value": "8",
+                    "label": "8"
+                },
+                {
+                    "value": "9",
+                    "label": "9"
+                },
+                {
+                    "value": "10",
+                    "label": "10"
+                }
+            ]
+        },
+        {
+            "name": "datacenter",
+            "type": "string",
+            "description": "IBM Cloud datacenter to create the cluster in.",
+            "hidden": false,
+            "label": "Datacenter",
+            "secured": false,
+            "required": true,
+            "immutable": false,
+            "options": [
+                {
+                  "value": "ams01",
+                  "label": "Amsterdam 01, The Netherlands"
+                },
+                {
+                  "value": "ams03",
+                  "label": "Amsterdam 03, The Netherlands"
+                },
+                {
+                  "value": "che01",
+                  "label": "Chennai, India"
+                },
+                {
+                  "value": "dal01",
+                  "label": "Dallas 01, USA"
+                },
+                {
+                  "value": "dal02",
+                  "label": "Dallas 02, USA"
+                },
+                {
+                  "value": "dal05",
+                  "label": "Dallas 05, USA"
+                },
+                {
+                  "value": "dal06",
+                  "label": "Dallas 06, USA"
+                },
+                {
+                  "value": "dal07",
+                  "label": "Dallas 07, USA"
+                },
+                {
+                  "value": "dal09",
+                  "label": "Dallas 09, USA"
+                },
+                {
+                  "value": "dal10",
+                  "label": "Dallas 10, USA"
+                },
+                {
+                  "value": "dal12",
+                  "label": "Dallas 12, USA"
+                },
+                {
+                  "value": "dal13",
+                  "label": "Dallas 13, USA",
+                  "default": "true"
+                },
+                {
+                  "value": "fra02",
+                  "label": "Frankfurt, Germany"
+                },
+                {
+                  "value": "hkg02",
+                  "label": "Hong Kong, China"
+                },
+                {
+                  "value": "hou02",
+                  "label": "Houston, USA"
+                },
+                {
+                  "value": "lon02",
+                  "label": "London, England"
+                },
+                {
+                  "value": "mel01",
+                  "label": "Melbourne, Australia"
+                },
+                {
+                  "value": "mil01",
+                  "label": "Milan, Italy"
+                },
+                {
+                  "value": "mon01",
+                  "label": "Montreal, Canada"
+                },
+                {
+                  "value": "osl01",
+                  "label": "Oslo, Norway"
+                },
+                {
+                  "value": "par01",
+                  "label": "Paris, France"
+                },
+                {
+                  "value": "mex01",
+                  "label": "Quer\u00e9taro, Mexico"
+                },
+                {
+                  "value": "sjc01",
+                  "label": "San Jose 01, USA"
+                },
+                {
+                  "value": "sjc03",
+                  "label": "San Jose 03, USA"
+                },
+                {
+                  "value": "sao01",
+                  "label": "Sao Paulo, Brazil"
+                },
+                {
+                  "value": "sea01",
+                  "label": "Seattle, USA"
+                },
+                {
+                  "value": "seo01",
+                  "label": "Seoul 01, Korea"
+                },
+                {
+                  "value": "sng01",
+                  "label": "Singapore, Singapore"
+                },
+                {
+                  "value": "syd01",
+                  "label": "Sydney, Australia"
+                },
+                {
+                  "value": "tok02",
+                  "label": "Tokyo, Japan"
+                },
+                {
+                  "value": "tor01",
+                  "label": "Toronto, Canada"
+                },
+                {
+                  "value": "wdc01",
+                  "label": "Washington, D.C. 01, USA"
+                },
+                {
+                  "value": "wdc04",
+                  "label": "Washington, D.C. 04, USA"
+                }
+            ]
+        },
+        {
+            "name": "machine_type",
+            "type": "string",
+            "description": "Machine type",
+            "hidden": false,
+            "label": "Machine Type",
+            "secured": false,
+            "required": true,
+            "immutable": false,
+            "options": [
+                {
+                    "value": "free",
+                    "label": "free",
+                    "default": "true"
+                },
+                {
+                    "value": "u2c.2x4",
+                    "label": "u2c.2x4"
+                },
+                {
+                    "value": "b2c.4x16",
+                    "label": "b2c.4x16"
+                },
+                {
+                    "value": "b2c.16x64",
+                    "label": "b2c.16x64"
+                },
+                {
+                    "value": "b2c.32x128",
+                    "label": "b2c.32x128"
+                },
+                {
+                    "value": "b2c.56x242",
+                    "label": "b2c.56x242"
+                },
+                {
+                    "value": "mr1c.28x512",
+                    "label": "mr1c.28x512"
+                },
+                {
+                    "value": "mg1c.16x128",
+                    "label": "mg1c.16x128"
+                },
+                {
+                    "value": "mg1c.28x256",
+                    "label": "mg1c.28x256"
+                },
+                {
+                    "value": "md1c.16x64.4x4tb",
+                    "label": "md1c.16x64.4x4tb"
+                },
+                {
+                    "value": "md1c.28x512.4x4tb",
+                    "label": "md1c.28x512.4x4tb"
+                },
+                {
+                    "value": "mb1c.4x32",
+                    "label": "mb1c.4x32"
+                },
+                {
+                    "value": "mb1c.16x64",
+                    "label": "mb1c.16x64"
+                }
+            ]
+        },
+        {
+            "name": "isolation",
+            "type": "string",
+            "description": "Hardware Isolation.",
+            "hidden": false,
+            "label": "Hardware Isolation",
+            "secured": false,
+            "required": true,
+            "immutable": false,
+            "options": [
+                {
+                    "value": "shared",
+                    "label": "Virtual Shared",
+                    "default": "true"
+                },
+                {
+                    "value": "dedicated",
+                    "label": "Virtual Dedicated"
+                },
+                {
+                    "value": "baremetal",
+                    "label": "Bare Metal"
+                }
+            ]
+        },
+        {
+            "name": "kube_version",
+            "type": "string",
+            "description": "Kubernetes version for the cluster; 'latest' for the latest supported version, or version number in X.Y[.Z] format",
+            "default": "latest",
+            "hidden": false,
+            "label": "Kubernetes version",
+            "secured": false,
+            "required": true,
+            "immutable": false
+        }
+    ],
+    "template_output_params": [
+        {
+            "name": "cluster_name",
+            "type": "string",
+            "description": "Cluster name or ID.",
+            "label": "Cluster name",
+            "hidden": false,
+            "secured": false,
+            "immutable": false
+        },          
+        {
+            "name": "cluster_config",
+            "type": "string",
+            "description": "Base64 encoded content of the kubeconfig yaml file.",
+            "label": "Cluster configuration",
+            "secured": true,
+            "hidden": false,
+            "immutable": false
+        },
+        {
+            "name": "cluster_certificate_authority",
+            "type": "string",
+            "description": "Base64 encoded certificate authority used to connect to the cluster.",
+            "label": "Cluster certificate authority",
+            "secured": true,
+            "hidden": false,
+            "immutable": false
+        }
+    ]
+}
