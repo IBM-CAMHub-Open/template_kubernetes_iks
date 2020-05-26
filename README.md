@@ -1,5 +1,5 @@
 # Managed Kubernetes Service within IBM Cloud
-Copyright IBM Corp. 2019, 2019 \
+Copyright IBM Corp. 2019, 2020 \
 This code is released under the Apache 2.0 License.
 
 ## Overview
