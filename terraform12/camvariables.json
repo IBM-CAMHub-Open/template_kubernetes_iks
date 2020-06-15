@@ -37,7 +37,7 @@
                     },
                     {
                         "name": "bluemix_api_key",
-                        "value": "${connection_params.bluemix_api_key}"
+                        "value": "${connection_params.ibmcloud_api_key}"
                     },
                     {
                         "name": "helm_version",
