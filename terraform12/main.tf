@@ -14,3 +14,12 @@ module "cluster" {
   kube_version        = var.kube_version
 }
 
+module "tiller" {
+  source                        = "./modules/helm_tiller"
+  deploy_tiller                 = var.deploy_tiller
+  cluster_name                  = var.cluster_name
+  cluster_config                = module.cluster.cluster_config
+  cluster_certificate_authority = module.cluster.cluster_certificate_authority
+  helm_version                  = var.helm_version
+}
+

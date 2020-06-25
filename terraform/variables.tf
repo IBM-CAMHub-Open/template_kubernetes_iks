@@ -38,6 +38,10 @@ variable "subnet_id" {
   description = "The portable subnet to use for cluster. A list of available subnets can be retrieved by running bx cs subnets."
 }
 
+variable "helm_version" {
+  description = "Helm version to be used to deploy the tiller into the Kubernetes cluster"
+}
+
 variable "resource_group_name" {
   type = "string"
   description = " The name of the IBM Cloud resource group."
@@ -47,4 +51,10 @@ variable "resource_group_name" {
 variable "kube_version" {
   type = "string"
   description = "Kubernetes version for the cluster."
+}
+
+variable "deploy_tiller" {
+  type = "string"
+  description = "Indicates whether tiller should be deployed."
+  default = "true"
 }

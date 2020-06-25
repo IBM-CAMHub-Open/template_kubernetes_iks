@@ -430,6 +430,39 @@
             "secured": false,
             "required": true,
             "immutable": false
+        },        
+        {
+            "name": "deploy_tiller",
+            "type": "string",
+            "description": "Indicates whether tiller should be deployed into Kubernetes cluster",
+            "label": "Deploy tiller",
+            "secured": false,
+            "hidden": false,
+            "required": true,
+            "default": "true",
+            "immutable": false,
+            "options": [
+                {
+                    "value": "true",
+                    "label": "true",
+                    "default": "true"
+                },
+                {
+                    "value": "false",
+                    "label": "false"
+                }
+            ]
+        },
+        {
+            "name": "helm_version",
+            "type": "string",
+            "description": "Helm version to be used to deploy the tiller into the Kubernetes cluster",
+            "label": "Helm version",
+            "secured": false,
+            "hidden": false,
+            "required": true,
+            "default": "2.16.1",
+            "immutable": false
         }
     ],
     "template_output_params": [
