@@ -18,7 +18,7 @@ The user must be assigned the following access policies to deploy and manage clu
 | Parameter name         | Parameter description |
 | :---                   | :---        |
 | region                 | IBM Cloud region in which to deploy the cluster |
-| cluster_name           | Name of the IKS cluster |
+| cluster_name           | Name of the IKS cluster. Cluster name can have lower case alphabets, numbers and dash. Must start with lower case alphabet and end with alpha-numeric character. Maximum length is 32 characters. |
 | resource\_group\_name  | Name of the IBM Cloud resource group. You must have access to at least one resource group in IBM Cloud |
 | private\_vlan\_id      | Virtual network that allows private communication between worker nodes in this cluster. Can be retrieved by running bx cs vlans <location> |
 | public\_vlan\_id       | Virtual network that allows secured communication between the worker nodes and the IBM-managed master node. Can be retrieved by running bx cs vlans <location> |

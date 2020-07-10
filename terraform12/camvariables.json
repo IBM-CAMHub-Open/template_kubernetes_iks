@@ -89,7 +89,9 @@
             "label": "Cluster Name",
             "secured": false,
             "required": true,
-            "immutable": false
+            "immutable": false,
+		    "regex": "(?:[a-z](?:[-a-z0-9]{0,30}[a-z0-9])?)",
+            "regexdesc": "Cluster name can have lower case alphabets, numbers and dash. Must start with lower case alphabet and end with alpha-numeric character. Maximum length is 32 characters."
         },
         {
             "name": "resource_group_name",
