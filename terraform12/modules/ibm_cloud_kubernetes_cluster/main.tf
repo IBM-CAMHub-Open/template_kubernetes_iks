@@ -66,6 +66,9 @@ resource "ibm_container_cluster" "kubecluster" {
     "latest_version",
     "",
   )
+  timeouts {
+    create = "${var.cluster_create_timeout}m"
+  }  
 }
 
 data "ibm_container_cluster_config" "cluster_config" {

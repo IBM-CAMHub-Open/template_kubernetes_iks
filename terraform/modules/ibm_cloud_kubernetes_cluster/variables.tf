@@ -47,3 +47,9 @@ variable "kube_version" {
   description = "Kubernetes version for the cluster."
   default = "1.11.6"
 }
+
+variable "cluster_create_timeout" {
+  type = "string"
+  description = "The timeout, in minutes, to wait for the IBM Cloud Kubernetes Cluster to complete."
+  default = "60"
+}

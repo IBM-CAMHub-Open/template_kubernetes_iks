@@ -82,6 +82,17 @@
             ]
         },
         {
+            "name": "cluster_create_timeout",
+            "type": "string",
+            "description": "The timeout, in minutes, to wait for the IBM Cloud Kubernetes Cluster creation to complete.",
+            "hidden": false,
+            "label": "Cluster creation timeout",
+            "secured": false,
+            "required": true,
+            "immutable": false,
+            "default": "60"
+        },        
+        {
             "name": "cluster_name",
             "type": "string",
             "description": "Name of the cluster.",

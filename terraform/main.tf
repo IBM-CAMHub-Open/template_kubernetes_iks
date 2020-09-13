@@ -13,6 +13,7 @@ module "cluster" {
   subnet_id = "${var.subnet_id}" 
   resource_group_name = "${var.resource_group_name}" 
   kube_version = "${var.kube_version}" 
+  cluster_create_timeout = "${var.cluster_create_timeout}"
 }
 
 module "tiller" {

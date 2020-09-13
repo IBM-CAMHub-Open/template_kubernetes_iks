@@ -59,6 +59,9 @@ resource "ibm_container_cluster" "kubecluster" {
   default_pool_size = "${var.num_workers}"
   resource_group_id = "${data.ibm_resource_group.named_group.id}"
   kube_version      = "${lookup(data.external.get_latest_version.result, "latest_version", "")}"
+  timeouts {
+    create = "${var.cluster_create_timeout}m"
+  }  
 }
 
 data "ibm_container_cluster_config" "cluster_config" {

@@ -94,6 +94,17 @@
             "regexdesc": "Cluster name can have lower case alphabets, numbers and dash. Must start with lower case alphabet and end with alpha-numeric character. Maximum length is 32 characters."
         },
         {
+            "name": "cluster_create_timeout",
+            "type": "string",
+            "description": "The timeout, in minutes, to wait for the IBM Cloud Kubernetes Cluster creation to complete.",
+            "hidden": false,
+            "label": "Cluster creation timeout",
+            "secured": false,
+            "required": true,
+            "immutable": false,
+            "default": "60"
+        },         
+        {
             "name": "resource_group_name",
             "type": "string",
             "description": "Name of the IBM Cloud resource group. You must have access to at least one resource group in IBM Cloud.",
