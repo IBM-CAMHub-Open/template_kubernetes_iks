@@ -96,7 +96,7 @@
         {
             "name": "cluster_create_timeout",
             "type": "string",
-            "description": "The timeout, in minutes, to wait for the IBM Cloud Kubernetes Cluster creation to complete.",
+            "description": "The timeout, in minutes, to wait for the IBM Cloud Kubernetes Cluster creation to complete. Default is 60 minutes. If your datacenter is slow and your deployment fails with timeout error, then deploy with an appropriate timeout value.",
             "hidden": false,
             "label": "Cluster creation timeout",
             "secured": false,
