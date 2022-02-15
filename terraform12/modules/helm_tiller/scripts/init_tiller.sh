@@ -28,5 +28,5 @@ esac
 
 ## Configure tiller within the cluster
 export KUBECONFIG=$CLUSTER_NAME/config.yaml \
-    && $CLUSTER_NAME/$PLATFORM/helm init --service-account tiller --upgrade $FORCE_UPGRADE $TILLER_CONNECTION_TIMEOUT
+    && $CLUSTER_NAME/$PLATFORM/helm init --stable-repo-url https://charts.helm.sh/stable --service-account tiller --upgrade $FORCE_UPGRADE $TILLER_CONNECTION_TIMEOUT
 

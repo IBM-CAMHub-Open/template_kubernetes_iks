@@ -65,14 +65,9 @@ function installHelmLocally() {
         ppc64le)    PLATFORM='linux-ppc64le';;
     esac
 
-    # Install helm locally  
-    if isHelmVersion215OrLater; then
-       wget --quiet https://get.helm.sh/helm-v${HELM_VERSION}-${PLATFORM}.tar.gz -P ${WORK_DIR} \
-            && tar -xzvf ${WORK_DIR}/helm-v${HELM_VERSION}-${PLATFORM}.tar.gz -C ${WORK_DIR}
-    else
-       wget --quiet https://storage.googleapis.com/kubernetes-helm/helm-v${HELM_VERSION}-${PLATFORM}.tar.gz -P ${WORK_DIR} \
-            && tar -xzvf ${WORK_DIR}/helm-v${HELM_VERSION}-${PLATFORM}.tar.gz -C ${WORK_DIR}
-    fi
+    wget --quiet https://get.helm.sh/helm-v${HELM_VERSION}-${PLATFORM}.tar.gz -P ${WORK_DIR} \
+        && tar -xzvf ${WORK_DIR}/helm-v${HELM_VERSION}-${PLATFORM}.tar.gz -C ${WORK_DIR}
+
 }
 
 function installKubectlLocally() {
