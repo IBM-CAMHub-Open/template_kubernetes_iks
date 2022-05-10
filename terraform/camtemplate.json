@@ -1,7 +1,7 @@
 {
-  "name": "IBM Cloud Kubernetes Service",
-  "description": "IBM Cloud Kubernetes Service",
-  "version": "1.0",
+  "name": "IBM Cloud Kubernetes Service for Terraform 1.x.x",
+  "description": "IBM Cloud Kubernetes Service for Terraform 1.x.x",
+  "version": "2.0",
   "type": "prebuilt",
   "manifest": {
     "template_type": "Terraform",

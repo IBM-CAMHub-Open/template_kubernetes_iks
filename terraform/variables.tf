@@ -1,5 +1,3 @@
-
-
 variable "num_workers" {
   description = "The number of workers to be deployed in the cluster."
 }
@@ -9,7 +7,7 @@ variable "cluster_name" {
 }
 
 variable "region" {
-  default = "us-south"
+  default     = "us-south"
   description = "The IBM Cloud region where you want to deploy your cluster."
 }
 
@@ -34,7 +32,7 @@ variable "public_vlan_id" {
 }
 
 variable "subnet_id" {
-  type = "list"
+  type        = list(string)
   description = "The portable subnet to use for cluster. A list of available subnets can be retrieved by running bx cs subnets."
 }
 
@@ -43,24 +41,24 @@ variable "helm_version" {
 }
 
 variable "resource_group_name" {
-  type = "string"
+  type        = string
   description = " The name of the IBM Cloud resource group."
-  default = "default"
+  default     = "default"
 }
 
 variable "kube_version" {
-  type = "string"
+  type        = string
   description = "Kubernetes version for the cluster."
 }
 
 variable "deploy_tiller" {
-  type = "string"
+  type        = string
   description = "Indicates whether tiller should be deployed."
-  default = "true"
+  default     = "true"
 }
 
 variable "cluster_create_timeout" {
-  type = "string"
+  type = string
   description = "The timeout, in minutes, to wait for the IBM Cloud Kubernetes Cluster to complete."
   default = "60"
 }

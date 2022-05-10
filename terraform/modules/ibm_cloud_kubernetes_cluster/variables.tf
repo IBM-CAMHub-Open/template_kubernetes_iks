@@ -28,7 +28,7 @@ variable "public_vlan_id" {
 }
 
 variable "subnet_id" {
-  type = "list"
+  type        = list(string)
   description = "The portable subnet to use for cluster. A list of available subnets can be retrieved by running bx cs subnets."
 }
 
@@ -37,19 +37,20 @@ variable "num_workers" {
 }
 
 variable "resource_group_name" {
-  type = "string"
+  type        = string
   description = " The name of the IBM Cloud resource group."
-  default = "default"
+  default     = "default"
 }
 
 variable "kube_version" {
-  type = "string"
+  type        = string
   description = "Kubernetes version for the cluster."
-  default = "1.11.6"
+  default     = "1.11.6"
 }
 
 variable "cluster_create_timeout" {
-  type = "string"
+  type = string
   description = "The timeout, in minutes, to wait for the IBM Cloud Kubernetes Cluster to complete."
   default = "60"
 }
+
