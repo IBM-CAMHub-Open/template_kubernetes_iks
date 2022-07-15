@@ -30,4 +30,4 @@ The user must be assigned the following access policies to deploy and manage clu
 | isolation              | Hardware isolation ('shared', 'dedicated' or 'baremetal') |
 | kube_version           | Kubernetes version for the cluster. Specify 'latest' for the most recent kubernetes version supported by the Kubernetes Service, or a version number in the X.Y[.Z] format (e.g. 1.13 or 1.13.5).  The most recent maintenance release for the specified version will be selected. |
 | deploy_tiller          | Indicates whether tiller should be deployed into Kubernetes cluster |
-| helm_version           | Helm version to be used to deploy the tiller into the Kubernetes cluster |
+| helm_version           | Helm version to be used to deploy the tiller into the Kubernetes cluster. Provide the version in the Major.Minor.Patch format. |
